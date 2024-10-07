@@ -1,7 +1,14 @@
 import inquirer from 'inquirer';
 import chalk from 'chalk';
 import { personas, algorithm_assumptions } from './js/algorithm.js';
-import { content } from './js/internet.js';
+import { content as c } from './js/internet.js';
+
+// shuffle content so it's not the same handful of articles being found each time
+// from here: https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
+const content = c
+    .map(value => ({ value, sort: Math.random() }))
+    .sort((a, b) => a.sort - b.sort)
+    .map(({ value }) => value)
 
 // global variables being set during gameplay
 let player; 
@@ -15,7 +22,8 @@ const names = {
     taylor_swift: "Taylor Swift",
     travis_kelce: "Travis Kelce",
     sabrina_carpenter: "Sabrina Carpenter",
-    chappell_roan: "Chappell Roan"
+    chappell_roan: "Chappell Roan",
+    lebron_james: "Lebron James"
 }
 
 function selectInterest() {
