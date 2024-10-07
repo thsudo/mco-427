@@ -22,7 +22,7 @@ export const content = [
         site: "The Atlantic",
         headline: "The Elite College Students Who Can’t Read Books",
         url: "https://www.theatlantic.com/magazine/archive/2024/11/the-elite-college-students-who-cant-read-books/679945/",
-        tags: ["college", "education"]
+        tags: ["college", "education", "grad_school"]
     },
     {
         site: "Vulture",
@@ -46,7 +46,7 @@ export const content = [
         site: "The New York Times",
         headline: "LeBron James won’t put expectations on JJ Redick, early-season Lakers: ‘That’s unfair’",
         url: "https://www.nytimes.com/athletic/5810661/2024/10/01/lebron-james-jj-redick-lakers-nba/",
-        tags: ["pop_culture", "sports", "basketball", "lebron_james"] 
+        tags: ["pop_culture", "sports", "basketball", "lebron_james",] 
     },
     {
         site: "Bloomberg",
@@ -159,5 +159,11 @@ export const content = [
         link: "https://www.washingtonpost.com/business/2024/10/04/who-uses-libraries/",
         headline: "Who uses public libraries the most? There’s a divide by religion, and politics.",
         tags: ["literature", "politics"]
+    },
+    {
+        site: "NBC Sports",
+        link: "https://www.nbcsports.com/nba/news/knicks-reportedly-had-talks-with-jazz-about-walker-kessler-trade-before-karl-anthony-towns-deal",
+        headline: "Knicks reportedly had talks with Jazz about Walker Kessler trade before Karl-Anthony Towns deal",
+        tags: ["sports", "basketball"]
     },
 ]

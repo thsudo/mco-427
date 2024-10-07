@@ -1,14 +1,7 @@
 import inquirer from 'inquirer';
 import chalk from 'chalk';
 import { personas, algorithm_assumptions } from './js/algorithm.js';
-import { content as c } from './js/internet.js';
-
-// shuffle content so it's not the same handful of articles being found each time
-// from here: https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
-const content = c
-    .map(value => ({ value, sort: Math.random() }))
-    .sort((a, b) => a.sort - b.sort)
-    .map(({ value }) => value)
+import { content } from './js/internet.js';
 
 // global variables being set during gameplay
 let player; 
@@ -103,6 +96,7 @@ function grabChoices(interestList) {
             }
         });
     }
+    console.log(twoPosts);
     return twoPosts;
 }
 
