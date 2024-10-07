@@ -207,7 +207,7 @@ function formatFinalReadOut() {
         }
         list += format(primaryInterestAssumptions[i]);
     }
-    console.info(`Based on your interest in`, `${chalk.bold.magenta(names[player.primary_interest])},`, `the algorithm assumed you were also interested in:`, `${chalk.bold.magenta(`${formatList(primaryInterestAssumptions)}`)}.`);
+    console.info(`Based on your interest in`, `${chalk.bold.magenta(format(player.primary_interest))},`, `the algorithm assumed you were also interested in:`, `${chalk.bold.magenta(`${formatList(primaryInterestAssumptions)}`)}.`);
     console.log();
 
     let ageObj = algorithm_assumptions['age'];
