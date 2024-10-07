@@ -18,6 +18,8 @@ let related_interests = new Set();
 let history = [];
 let history_set = new Set();
 let currentOptions = [];
+
+// properly format names
 const names = {
     taylor_swift: "Taylor Swift",
     travis_kelce: "Travis Kelce",
@@ -26,6 +28,7 @@ const names = {
     lebron_james: "Lebron James"
 }
 
+// randomly select an interest to find content on
 function selectInterest() {
     let interests = [];
 
@@ -41,6 +44,7 @@ function randomize(list) {
     return Math.floor(Math.random() * list.length);
 }
 
+// format interest to remove any _, capital names, etc
 function format(interest) {
     if (Object.keys(names).includes(interest)) {
         return names[interest];
@@ -59,6 +63,7 @@ function format(interest) {
     return formattedString;
 }
 
+// format list into plain language format
 function formatList(array) {
     let list = '';
     for (let i = 0; i < array.length; i++) {
@@ -73,6 +78,7 @@ function formatList(array) {
     return list;
 }
 
+// update global records
 function updateRecords(answer, options) {
     let selected = options.find((option) => option.headline === answer);
     history.push(selected);
@@ -82,6 +88,7 @@ function updateRecords(answer, options) {
     selected['tags'].forEach(tag => all_interests.add(tag));
 }
 
+// grab 2 pieces of content to choose from
 function grabChoices(interestList) {
     let twoPosts = [];
     let selected = new Set();
@@ -121,6 +128,46 @@ function updateInterests(demographicInfo) {
     });
 }
 
+// format readout of interests
+function formatFinalReadOut() {
+
+    console.info(`By the end of the game, the algorithm associated you with`, `${chalk.bold(`${all_interests.size}`)} unique interests. This is the list:`);
+    for (let value of all_interests) {
+        console.log(`   • ${format(value)}`);
+    }
+
+    console.info(`${chalk.bold('Below is more information on how this list was determined.')}`);
+    console.log();
+
+    let primaryInterestAssumptions = algorithm_assumptions[player.primary_interest];
+    let list = '';
+    for (let i = 0; i < primaryInterestAssumptions.length; i++) {
+        if (i !== 0) {
+            list += ', '
+        }
+        list += format(primaryInterestAssumptions[i]);
+    }
+    console.info(`Based on your interest in`, `${chalk.bold.magenta(format(player.primary_interest))},`, `the algorithm assumed you were also interested in:`, `${chalk.bold.magenta(`${formatList(primaryInterestAssumptions)}`)}.`);
+    console.log();
+
+    let ageObj = algorithm_assumptions['age'];
+    const interestsByAge = ageObj[player.age];
+    console.info(`Based on your`, `${chalk.bold.green('age')},`, `the algorithm assumed you were interested in:`, `${chalk.bold.green(`${formatList(interestsByAge)}`)}.`);
+    console.log();
+
+    let genderObj = algorithm_assumptions['gender'];
+    const interestsByGender = genderObj[player.gender];
+    console.info(`Based on your`, `${chalk.bold.blue('gender')},`, `the algorithm assumed you were interested in:`,  `${chalk.bold.blue(`${formatList(interestsByGender)}`)}.`);
+    console.log();
+    
+    console.info(`Here's more info on your interests based by your selections: `);
+    let first = history[0];
+    console.info(`   • "${chalk.bold.yellow(first.headline)}",`, `was associated with:`, `${chalk.bold.yellow(`${formatList(first.tags)}`)}.`);
+    let second = history[1];
+    console.info(`   • "${chalk.bold.cyan(second.headline)}",`, `was associated with:`, `${chalk.bold.cyan(`${formatList(second.tags)}`)}.`);
+    let last = history[2];
+    console.info(`   • "${chalk.bold.red(last.headline)}",`, `was associated with:`, `${chalk.bold.red(`${formatList(last.tags)}`)}.`);
+}
 
 // play the game
 async function playGame() {
@@ -195,46 +242,6 @@ async function playGame() {
         formatFinalReadOut();
         return;
     });
-}
-
-function formatFinalReadOut() {
-
-    console.info(`By the end of the game, the algorithm associated you with`, `${chalk.bold(`${all_interests.size}`)} unique interests. This is the list:`);
-    for (let value of all_interests) {
-        console.log(`   • ${format(value)}`);
-    }
-
-    console.info(`${chalk.bold('Below is more information on how this list was determined.')}`);
-    console.log();
-
-    let primaryInterestAssumptions = algorithm_assumptions[player.primary_interest];
-    let list = '';
-    for (let i = 0; i < primaryInterestAssumptions.length; i++) {
-        if (i !== 0) {
-            list += ', '
-        }
-        list += format(primaryInterestAssumptions[i]);
-    }
-    console.info(`Based on your interest in`, `${chalk.bold.magenta(format(player.primary_interest))},`, `the algorithm assumed you were also interested in:`, `${chalk.bold.magenta(`${formatList(primaryInterestAssumptions)}`)}.`);
-    console.log();
-
-    let ageObj = algorithm_assumptions['age'];
-    const interestsByAge = ageObj[player.age];
-    console.info(`Based on your`, `${chalk.bold.green('age')},`, `the algorithm assumed you were interested in:`, `${chalk.bold.green(`${formatList(interestsByAge)}`)}.`);
-    console.log();
-
-    let genderObj = algorithm_assumptions['gender'];
-    const interestsByGender = genderObj[player.gender];
-    console.info(`Based on your`, `${chalk.bold.blue('gender')},`, `the algorithm assumed you were interested in:`,  `${chalk.bold.blue(`${formatList(interestsByGender)}`)}.`);
-    console.log();
-    
-    console.info(`Here's more info on your interests based by your selections: `);
-    let first = history[0];
-    console.info(`   • "${chalk.bold.yellow(first.headline)}",`, `was associated with:`, `${chalk.bold.yellow(`${formatList(first.tags)}`)}.`);
-    let second = history[1];
-    console.info(`   • "${chalk.bold.cyan(second.headline)}",`, `was associated with:`, `${chalk.bold.cyan(`${formatList(second.tags)}`)}.`);
-    let last = history[2];
-    console.info(`   • "${chalk.bold.red(last.headline)}",`, `was associated with:`, `${chalk.bold.red(`${formatList(last.tags)}`)}.`);
 }
 
 playGame();
