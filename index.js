@@ -72,7 +72,13 @@ function formatList(array) {
 }
 
 // update global records
-function updateRecords(answer, options) {
+function updateRecords(answer, options, interests) {
+    for (let i = 0; i < options.length; i++) {
+        let option = options[i];
+        option['algorithm_selected'] = interests[i];
+        options[i] = option;
+    }
+
     let selected = options.find((option) => option.headline === answer);
     history.push(selected);
     if (!history_set.has(selected.headline)) {
@@ -96,7 +102,6 @@ function grabChoices(interestList) {
             }
         });
     }
-    console.log(twoPosts);
     return twoPosts;
 }
 
@@ -156,11 +161,13 @@ function formatFinalReadOut() {
     
     console.info(`Here's more info on your interests based by your selections: `);
     let first = history[0];
-    console.info(`   • "${chalk.bold.yellow(first.headline)}",`, `was associated with:`, `${chalk.bold.yellow(`${formatList(first.tags)}`)}.`);
+    console.info(`   • "${chalk.bold.yellow(first.headline)}",`, `was recommended because`, `${chalk.bold.yellow(`${format(first.algorithm_selected)}`)}`, `is one of your interests and`,`was associated with:`, `${chalk.bold.yellow(`${formatList(first.tags)}`)}.`);
+    
     let second = history[1];
-    console.info(`   • "${chalk.bold.cyan(second.headline)}",`, `was associated with:`, `${chalk.bold.cyan(`${formatList(second.tags)}`)}.`);
+    console.info(`   • "${chalk.bold.cyan(second.headline)}",`, `was recommended because`, `${chalk.bold.cyan(`${format(second.algorithm_selected)}`)}`, `is one of your interests and`,`was associated with:`, `${chalk.bold.cyan(`${formatList(second.tags)}`)}.`);
+
     let last = history[2];
-    console.info(`   • "${chalk.bold.red(last.headline)}",`, `was associated with:`, `${chalk.bold.red(`${formatList(last.tags)}`)}.`);
+    console.info(`   • "${chalk.bold.red(last.headline)}",`, `was recommended because`, `${chalk.bold.red(`${format(last.algorithm_selected)}`)}`, `is one of your interests and`,`was associated with:`, `${chalk.bold.red(`${formatList(last.tags)}`)}.`);
 }
 
 // play the game
@@ -203,7 +210,7 @@ async function playGame() {
             choices: currentOptions.map(option => option.headline)
         }
     ]).then((selection) => {
-        updateRecords(selection['first-answer'], currentOptions);
+        updateRecords(selection['first-answer'], currentOptions, interests1);
         return selectInterest();
     });
 
@@ -217,7 +224,7 @@ async function playGame() {
             choices: currentOptions.map(option => option.headline)
         }
     ]).then((selection) => {
-        updateRecords(selection['second-answer'], currentOptions);
+        updateRecords(selection['second-answer'], currentOptions, interests2);
         return selectInterest();
     });
 
@@ -232,7 +239,7 @@ async function playGame() {
             choices: currentOptions.map(option => option.headline)
         }
     ]).then((selection) => {
-        updateRecords(selection['final-answer'], currentOptions);
+        updateRecords(selection['final-answer'], currentOptions, interests3);
         formatFinalReadOut();
         return;
     });
