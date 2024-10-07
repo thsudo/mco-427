@@ -11,5 +11,5 @@ Below is an example of the terminal output once the game has completed.
 <img width="1182" alt="terminal_output_ex" src="https://github.com/user-attachments/assets/dce2ae79-050d-46c5-8fb8-d3f2ab887f7d">
 
 -----
-##Installation
-> yarn install
+## Installation
+``` yarn install ```
