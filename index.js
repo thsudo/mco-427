@@ -200,7 +200,7 @@ async function playGame() {
     ]).then(selection => {
             player = personas[selection.persona];
             console.info('Hello,', chalk.bold(`${player.name}`), `. Thanks for playing. Here's what we know about you so far...`);
-            console.info('You live in', chalk.bold(`${player.location}`), 'are', chalk.bold(`${player.age} years old,`), 'and enjoy', chalk.bold(`${format(player['primary_interest'])}.`));
+            console.info('You live in', chalk.bold(`${player.location},`), 'are', chalk.bold(`${player.age} years old,`), 'and enjoy', chalk.bold(`${format(player['primary_interest'])}.`));
             // add primary interests
             let primaryInterest = player.primary_interest;
             all_interests.add(primaryInterest);
