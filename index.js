@@ -102,6 +102,24 @@ function grabChoices(interestList) {
             }
         });
     }
+    // if we run out of posts related to one of the selected interests,
+    // get a new interest and find some more content
+    while (twoPosts.length < 2) {
+       let interests =  selectInterest();
+       for (let i of interests) {
+        // iterate backwards through content just to get some more variety
+        for (let i = content.length - 1; i > -1; i--) {
+            if (content[i]['tags'].includes(i)) {
+                // make sure the same piece of content isn't chosen twice
+                if (!selected.has(c.headline)) {
+                    selected.add(c.headline);
+                    twoPosts.push(c);
+                }
+            }
+        }
+       }
+
+    }
     return twoPosts;
 }
 

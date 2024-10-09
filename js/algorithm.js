@@ -15,10 +15,10 @@ export const personas = {
         primary_interest: "video_games",
     },
     ben: {
-        name: "Marcia",
+        name: "Ben",
         age: 17,
         location: "Raleigh, NC",
-        gender: "female",
+        gender: "male",
         primary_interest: "literature",
     }
 }
